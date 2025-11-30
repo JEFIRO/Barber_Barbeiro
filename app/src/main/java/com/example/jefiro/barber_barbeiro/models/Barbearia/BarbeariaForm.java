@@ -3,6 +3,7 @@ package com.example.jefiro.barber_barbeiro.models.Barbearia;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.jefiro.barber_barbeiro.R;
+import com.example.jefiro.barber_barbeiro.models.maps.Maps;
 import com.example.jefiro.barber_barbeiro.service.SupaBase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -35,9 +37,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class BarbeariaForm extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
 
-    private static final String TAG = "BarbeariaForm";
+public class BarbeariaForm extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_CODE = 100;
     private TextInputEditText editNome, editTelefone, editSenha, editConfirmarSenha, editEmail;
     private TextInputEditText editEndereco, editNumero, editBairro, editCidade;
@@ -57,7 +60,6 @@ public class BarbeariaForm extends AppCompatActivity {
     private Double selectedLat = null;
     private Double selectedLng = null;
     private ActivityResultLauncher<Intent> galeriaLauncher;
-    private ActivityResultLauncher<Intent> placeLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,7 @@ public class BarbeariaForm extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+
 
         inicializarViews();
         configurarEstados();
@@ -98,14 +101,12 @@ public class BarbeariaForm extends AppCompatActivity {
         layoutStep2 = findViewById(R.id.layoutStep2);
         layoutStep3 = findViewById(R.id.layoutStep3);
 
-        // Progress
         step1 = findViewById(R.id.step1);
         step2 = findViewById(R.id.step2);
         step3 = findViewById(R.id.step3);
         line1 = findViewById(R.id.line1);
         line2 = findViewById(R.id.line2);
 
-        // Botões
         btnVoltar = findViewById(R.id.btnVoltar);
         btnContinuar = findViewById(R.id.btnContinuar);
     }
@@ -125,6 +126,8 @@ public class BarbeariaForm extends AppCompatActivity {
         btnVoltar.setOnClickListener(v -> voltarStep());
         btnSelecionarFoto.setOnClickListener(v -> verificarPermissao());
         btnRemoverFoto.setOnClickListener(v -> removerFoto());
+        btnEscolherEndereco.setOnClickListener(v -> enderecoViaPlace());
+
     }
 
     private void configurarGaleriaLauncher() {
@@ -325,6 +328,11 @@ public class BarbeariaForm extends AppCompatActivity {
         }
     }
 
+    private void enderecoViaPlace() {
+        Intent i = new Intent(getApplicationContext(), Maps.class);
+        startActivityForResult(i, 1001);
+
+    }
 
 
     @Override
@@ -347,6 +355,40 @@ public class BarbeariaForm extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1001 && resultCode == RESULT_OK) {
+
+            double lat = data.getDoubleExtra("lat", 0);
+            double lon = data.getDoubleExtra("lon", 0);
+
+            selectedLat = lat;
+            selectedLng = lon;
+
+            ArrayList<String> endereco = data.getStringArrayListExtra("endereco");
+
+            if (!endereco.isEmpty()) {
+                setEndereco(endereco);
+                return;
+            }
+
+        }
+    }
+
+    private void setEndereco(List<String> endereco) {
+        if (endereco.size() >= 6) {
+            Log.d("MAPS", "Endereço selecionado: " + endereco);
+
+            editEndereco.setText(endereco.get(0));
+            editNumero.setText(endereco.get(1));
+            editBairro.setText(endereco.get(2));
+            editCidade.setText(endereco.get(3));
+            spinnerEstado.setText(endereco.get(4));
+        }
+
+    }
 
     private void abrirGaleria() {
         Intent intent = new Intent(Intent.ACTION_PICK);
@@ -379,20 +421,10 @@ public class BarbeariaForm extends AppCompatActivity {
         String email = editEmail.getText().toString().trim();
         String telefone = editTelefone.getText().toString().trim();
 
-        String numero = editNumero.getText().toString().trim();
-        String bairro = editBairro.getText().toString().trim();
-        String cidade = editCidade.getText().toString().trim();
-        String estado = spinnerEstado.getText().toString().trim();
 
-        Endereco endereco = new Endereco(numero, bairro, cidade, estado);
-        Barbearia barbearia = new Barbearia(nome, telefone, email, endereco, null, null);
+        Barbearia barbearia = new Barbearia(nome, telefone, email, null, null);
 
         criarBarbearia(barbearia);
-
-        Toast.makeText(this,
-                "Cadastro enviado!\nNome: " + nome + "\nEndereço: " + endereco + ", " + numero +
-                        " - " + bairro + "\nCoordenadas: " + (selectedLat != null ? selectedLat : "N/A"),
-                Toast.LENGTH_LONG).show();
     }
 
     private void criarClientAuth(Barbearia barbearia, String senha) {
@@ -428,15 +460,44 @@ public class BarbeariaForm extends AppCompatActivity {
             barbearia.setFotoUrl(SupaBase.uploadImageToSupabase(getApplicationContext(), fotoUri));
         }
 
-        db.collection("Barbearias").document(barbearia.getId()).set(barbearia).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "Tudo certo", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Tudo errado", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+        db.collection("Barbearias")
+                .document(barbearia.getId())
+                .set(barbearia)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            salvarEnderecosSubcolecao(barbearia.getId());
+                            Toast.makeText(getApplicationContext(), "Tudo certo", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Tudo errado", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
     }
+
+    private void salvarEnderecosSubcolecao(String barbeariaId) {
+        String numero = editNumero.getText().toString().trim();
+        String bairro = editBairro.getText().toString().trim();
+        String cidade = editCidade.getText().toString().trim();
+        String estado = spinnerEstado.getText().toString().trim();
+
+        Endereco endereco = new Endereco(numero, bairro, cidade, estado, selectedLat, selectedLng);
+
+
+        db.collection("Barbearias")
+                .document(barbeariaId)
+                .collection("Enderecos")
+                .add(endereco)
+                .addOnSuccessListener(docRef -> {
+                    Log.d("FIRESTORE", "Endereço salvo: " + docRef.getId());
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FIRESTORE", "Erro ao salvar endereço", e);
+                });
+
+        Toast.makeText(getApplicationContext(), "Tudo certo!", Toast.LENGTH_LONG).show();
+    }
+
+
 }

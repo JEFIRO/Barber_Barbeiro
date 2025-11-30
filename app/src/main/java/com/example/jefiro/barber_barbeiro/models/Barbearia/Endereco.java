@@ -1,19 +1,40 @@
 package com.example.jefiro.barber_barbeiro.models.Barbearia;
 
 public class Endereco {
+    private String uuid;
     private String numero;
     private String bairro;
     private String cidade;
     private String estado;
+    private Double lat;
+    private Double log;
 
     public Endereco() {
     }
 
-    public Endereco(String numero, String bairro, String cidade, String estado) {
+    public Endereco(String numero, String bairro, String cidade, String estado, Double lat, Double log) {
         this.numero = numero;
         this.bairro = bairro;
         this.cidade = cidade;
         this.estado = estado;
+        this.lat = lat;
+        this.log = log;
+    }
+
+    public Double getLat() {
+        return lat;
+    }
+
+    public void setLat(Double lat) {
+        this.lat = lat;
+    }
+
+    public Double getLog() {
+        return log;
+    }
+
+    public void setLog(Double log) {
+        this.log = log;
     }
 
     public String getNumero() {

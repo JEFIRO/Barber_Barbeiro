@@ -10,18 +10,16 @@ public class Barbearia {
     private String nome;
     private String telefone;
     private String email;
-    private Endereco endereco;
     private String fotoUrl;
     private List<Horario> horarioFuncionamento;
     private LocalDateTime criadoEm;
     private LocalDateTime atualizadoEm;
 
-    public Barbearia(String nome, String telefone, String email, Endereco endereco, String fotoUrl, List<Horario> horarioFuncionamento) {
+    public Barbearia(String nome, String telefone, String email, String fotoUrl, List<Horario> horarioFuncionamento) {
         this.id = id;
         this.nome = nome;
         this.telefone = telefone;
         this.email = email;
-        this.endereco = endereco;
         this.fotoUrl = fotoUrl;
         this.horarioFuncionamento = horarioFuncionamento;
         this.criadoEm = LocalDateTime.now();
@@ -61,14 +59,6 @@ public class Barbearia {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
     }
 
     public String getFotoUrl() {
