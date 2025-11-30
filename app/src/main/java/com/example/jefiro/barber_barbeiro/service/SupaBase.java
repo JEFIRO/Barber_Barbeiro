@@ -18,8 +18,8 @@ import okhttp3.Response;
 
 public class SupaBase {
 
-    private static final String SUPABASE_URL = "https://iuzrpmyfklrvfpndmwbk.supabase.co";
-    private static final String SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml1enJwbXlma2xydmZwbmRtd2JrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM4MzMyNzgsImV4cCI6MjA3OTQwOTI3OH0.EiSfjlbSL881vznX193OCrG9ouI_2BdaBslYh2CM9GY";
+    private static final String SUPABASE_URL = "https://gsdlqisexlujpbhmefau.supabase.co";
+    private static final String SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdzZGxxaXNleGx1anBiaG1lZmF1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ1MjUzMTgsImV4cCI6MjA4MDEwMTMxOH0._Vd5EzlFiTAjsKfzQwdiHVFe5fawUg8YTPXfrel9XxE";
     private static final String BUCKET_NAME = "ClientesProfileImage";
 
     public static String uploadImageToSupabase(Context context, Uri uri) {

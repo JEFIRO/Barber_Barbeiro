@@ -28,6 +28,7 @@ import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.jefiro.barber_barbeiro.R;
+import com.example.jefiro.barber_barbeiro.models.home.HomePage;
 import com.example.jefiro.barber_barbeiro.models.maps.Maps;
 import com.example.jefiro.barber_barbeiro.service.SupaBase;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -468,6 +469,7 @@ public class BarbeariaForm extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             salvarEnderecosSubcolecao(barbearia.getId());
+                            puxarHome();
                             Toast.makeText(getApplicationContext(), "Tudo certo", Toast.LENGTH_LONG).show();
                         } else {
                             Toast.makeText(getApplicationContext(), "Tudo errado", Toast.LENGTH_LONG).show();
@@ -499,5 +501,10 @@ public class BarbeariaForm extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Tudo certo!", Toast.LENGTH_LONG).show();
     }
 
+    private void puxarHome() {
+        var i = new Intent(getApplicationContext(), HomePage.class);
+        startActivity(i);
+        finish();
+    }
 
 }
