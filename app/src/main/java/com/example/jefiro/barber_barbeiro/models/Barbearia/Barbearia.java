@@ -1,9 +1,8 @@
 package com.example.jefiro.barber_barbeiro.models.Barbearia;
 
-import com.example.jefiro.barber_barbeiro.models.horario.Horario;
+import com.google.firebase.Timestamp;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class Barbearia {
     private String id;
@@ -11,19 +10,27 @@ public class Barbearia {
     private String telefone;
     private String email;
     private String fotoUrl;
-    private List<Horario> horarioFuncionamento;
-    private LocalDateTime criadoEm;
-    private LocalDateTime atualizadoEm;
+    private Timestamp criadoEm;
+    private Timestamp atualizadoEm;
 
-    public Barbearia(String nome, String telefone, String email, String fotoUrl, List<Horario> horarioFuncionamento) {
+    public Barbearia(String nome, String telefone, String email, String fotoUrl) {
+        this.nome = nome;
+        this.telefone = telefone;
+        this.email = email;
+        this.fotoUrl = fotoUrl;
+
+        this.criadoEm = Timestamp.now();
+        this.atualizadoEm = Timestamp.now();
+    }
+
+    public Barbearia(String id, String nome, String telefone, String email, String fotoUrl, Timestamp criadoEm, Timestamp atualizadoEm) {
         this.id = id;
         this.nome = nome;
         this.telefone = telefone;
         this.email = email;
         this.fotoUrl = fotoUrl;
-        this.horarioFuncionamento = horarioFuncionamento;
-        this.criadoEm = LocalDateTime.now();
-        this.atualizadoEm = LocalDateTime.now();
+        this.criadoEm = criadoEm;
+        this.atualizadoEm = atualizadoEm;
     }
 
     public Barbearia() {
@@ -69,27 +76,19 @@ public class Barbearia {
         this.fotoUrl = fotoUrl;
     }
 
-    public List<Horario> getHorarioFuncionamento() {
-        return horarioFuncionamento;
-    }
-
-    public void setHorarioFuncionamento(List<Horario> horarioFuncionamento) {
-        this.horarioFuncionamento = horarioFuncionamento;
-    }
-
-    public LocalDateTime getCriadoEm() {
+    public Timestamp getCriadoEm() {
         return criadoEm;
     }
 
-    public void setCriadoEm(LocalDateTime criadoEm) {
+    public void setCriadoEm(Timestamp criadoEm) {
         this.criadoEm = criadoEm;
     }
 
-    public LocalDateTime getAtualizadoEm() {
+    public Timestamp getAtualizadoEm() {
         return atualizadoEm;
     }
 
-    public void setAtualizadoEm(LocalDateTime atualizadoEm) {
+    public void setAtualizadoEm(Timestamp atualizadoEm) {
         this.atualizadoEm = atualizadoEm;
     }
 }

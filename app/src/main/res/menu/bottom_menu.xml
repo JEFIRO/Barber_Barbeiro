@@ -17,4 +17,5 @@
         android:id="@+id/nav_agendamento"
         android:icon="@drawable/ic_123"
         android:title="Agendamento" />
+
 </menu>

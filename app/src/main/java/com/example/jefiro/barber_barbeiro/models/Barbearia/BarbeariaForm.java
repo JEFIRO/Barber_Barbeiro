@@ -423,7 +423,7 @@ public class BarbeariaForm extends AppCompatActivity {
         String telefone = editTelefone.getText().toString().trim();
 
 
-        Barbearia barbearia = new Barbearia(nome, telefone, email, null, null);
+        Barbearia barbearia = new Barbearia(nome, telefone, email, null);
 
         criarBarbearia(barbearia);
     }

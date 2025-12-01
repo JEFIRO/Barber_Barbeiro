@@ -10,6 +10,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.jefiro.barber_barbeiro.R;
+import com.example.jefiro.barber_barbeiro.models.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomePage extends AppCompatActivity {
@@ -31,15 +32,14 @@ public class HomePage extends AppCompatActivity {
         bottomNav.setOnItemSelectedListener(item -> {
             Fragment selectedFragment = null;
 
-            if (item.getItemId() == R.id.nav_settings){
+            if (item.getItemId() == R.id.nav_settings) {
                 selectedFragment = new ConfigurationFragment();
             }
 
-            if (selectedFragment != null) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.containerFragment, selectedFragment)
-                        .commit();
+            if (item.getItemId() == R.id.nav_profile) {
+                selectedFragment = new ProfileFragment();
             }
+
 
             if (selectedFragment != null) {
                 getSupportFragmentManager().beginTransaction()
@@ -47,7 +47,7 @@ public class HomePage extends AppCompatActivity {
                         .commit();
             }
 
-            if (item.getItemId() == R.id.nav_agendamento){
+            if (item.getItemId() == R.id.nav_agendamento) {
                 selectedFragment = new ConfigurationFragment();
             }
 

@@ -18,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Barber_Barbeiro">
         <activity
+            android:name=".models.Profile"
+            android:exported="false" />
+        <activity
             android:name=".models.ServicosPestado"
             android:exported="false" />
         <activity
