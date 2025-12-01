@@ -32,7 +32,7 @@ public class SupaBase {
 
 
             String url = SUPABASE_URL + "/storage/v1/object/"
-                    + BUCKET_NAME + System.currentTimeMillis() + ".jpg";
+                    + BUCKET_NAME + "/" + System.currentTimeMillis() + ".jpg";
 
             Log.d("SUPABASE", "URL destino: " + url);
 
@@ -68,6 +68,24 @@ public class SupaBase {
         }
         return null;
 
+    }
+
+    public static boolean deleteImg(String link) {
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url(link)
+                .addHeader("apikey", SUPABASE_KEY)
+                .addHeader("Authorization", "Bearer " + SUPABASE_KEY)
+                .delete()
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            return response.isSuccessful();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 

@@ -422,7 +422,6 @@ public class BarbeariaForm extends AppCompatActivity {
         String email = editEmail.getText().toString().trim();
         String telefone = editTelefone.getText().toString().trim();
 
-
         Barbearia barbearia = new Barbearia(nome, telefone, email, null);
 
         criarBarbearia(barbearia);
@@ -457,8 +456,10 @@ public class BarbeariaForm extends AppCompatActivity {
     }
 
     private void salvaClienteNoBanco(Barbearia barbearia) {
+
         if (fotoUri != null) {
             barbearia.setFotoUrl(SupaBase.uploadImageToSupabase(getApplicationContext(), fotoUri));
+            Toast.makeText(getApplicationContext(), "Img Salva", Toast.LENGTH_LONG).show();
         }
 
         db.collection("Barbearias")
@@ -472,6 +473,10 @@ public class BarbeariaForm extends AppCompatActivity {
                             puxarHome();
                             Toast.makeText(getApplicationContext(), "Tudo certo", Toast.LENGTH_LONG).show();
                         } else {
+                            var url = barbearia.getFotoUrl();
+                            if (url.isEmpty()) {
+                                SupaBase.deleteImg(url);
+                            }
                             Toast.makeText(getApplicationContext(), "Tudo errado", Toast.LENGTH_LONG).show();
                         }
                     }
