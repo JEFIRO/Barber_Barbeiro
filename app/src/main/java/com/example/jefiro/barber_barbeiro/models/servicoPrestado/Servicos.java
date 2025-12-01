@@ -1,4 +1,6 @@
-package com.example.jefiro.barber_barbeiro.models;
+package com.example.jefiro.barber_barbeiro.models.servicoPrestado;
+
+import com.google.firebase.Timestamp;
 
 import java.time.LocalDateTime;
 
@@ -8,8 +10,8 @@ public class Servicos {
     private String duracao;
     private Double preco;
     private boolean ativo;
-    private LocalDateTime criadoEm;
-    private LocalDateTime atualizadoEm;
+    private Timestamp criadoEm;
+    private Timestamp atualizadoEm;
 
     public Servicos() {
     }
@@ -21,8 +23,18 @@ public class Servicos {
         this.preco = preco;
 
         this.ativo = true;
-        this.criadoEm = LocalDateTime.now();
-        this.atualizadoEm = LocalDateTime.now();
+        this.criadoEm = Timestamp.now();
+        this.atualizadoEm = Timestamp.now();
+    }
+
+    public Servicos(String barbearia_id, String nome, String duracao, Double preco, boolean ativo, Timestamp criadoEm, Timestamp atualizadoEm) {
+        this.barbearia_id = barbearia_id;
+        this.nome = nome;
+        this.duracao = duracao;
+        this.preco = preco;
+        this.ativo = ativo;
+        this.criadoEm = criadoEm;
+        this.atualizadoEm = atualizadoEm;
     }
 
     public String getBarbearia_id() {
@@ -65,19 +77,19 @@ public class Servicos {
         this.ativo = ativo;
     }
 
-    public LocalDateTime getCriadoEm() {
+    public Timestamp getCriadoEm() {
         return criadoEm;
     }
 
-    public void setCriadoEm(LocalDateTime criadoEm) {
+    public void setCriadoEm(Timestamp criadoEm) {
         this.criadoEm = criadoEm;
     }
 
-    public LocalDateTime getAtualizadoEm() {
+    public Timestamp getAtualizadoEm() {
         return atualizadoEm;
     }
 
-    public void setAtualizadoEm(LocalDateTime atualizadoEm) {
+    public void setAtualizadoEm(Timestamp atualizadoEm) {
         this.atualizadoEm = atualizadoEm;
     }
 }
