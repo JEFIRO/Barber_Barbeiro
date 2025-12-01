@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.jefiro.barber_barbeiro.R;
 import com.example.jefiro.barber_barbeiro.models.Barbeiro.BarbeiroForm;
+import com.example.jefiro.barber_barbeiro.models.ServicosPestado;
 import com.example.jefiro.barber_barbeiro.models.horario.HorarioFuncionamento;
 
 public class ConfigurationFragment extends Fragment {
@@ -30,6 +31,11 @@ public class ConfigurationFragment extends Fragment {
         });
         view.findViewById(R.id.btnHorarioFuncionamento).setOnClickListener(v -> {
             Intent intent = new Intent(requireActivity(), HorarioFuncionamento.class);
+            startActivity(intent);
+        });
+
+        view.findViewById(R.id.btnSevicos).setOnClickListener(v -> {
+            Intent intent = new Intent(requireActivity(), ServicosPestado.class);
             startActivity(intent);
         });
 

@@ -51,9 +51,44 @@ public class HorarioFuncionamento extends AppCompatActivity {
 
         btnSalvar.setOnClickListener(v -> salvarHorarios());
 
-        carregarDadosEConstruirTela();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseUser user = auth.getCurrentUser();
+
+        if (user == null) {
+            Toast.makeText(this, "Usuário não autenticado", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, Login.class));
+            finish();
+            return;
+        }
+
+        db.collection("Barbearias")
+                .document(user.getUid())
+                .collection("Horarios_Funcionamento")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+
+                    if (queryDocumentSnapshots.isEmpty()) {
+                        carregarDadosEConstruirTela();
+                        return;
+                    }
+
+                    Map<String, Horario> mapa = new HashMap<>();
+
+                    for (DocumentSnapshot doc : queryDocumentSnapshots) {
+                        Horario h = doc.toObject(Horario.class);
+                        mapa.put(h.getDiaSemana().name(), h);
+                    }
+                    construirInterface(mapa);
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FIREBASE", "Erro: ", e);
+                });
+    }
     private void carregarDadosEConstruirTela() {
         FirebaseUser user = auth.getCurrentUser();
         if (user == null) {
@@ -188,7 +223,7 @@ public class HorarioFuncionamento extends AppCompatActivity {
 
             Horario horario = new Horario(diaEnum, periodsList, closed);
             horario.setIdBarbearia(auth.getCurrentUser().getUid());
-            Log.d("Horario",horario.toString());
+            Log.d("Horario", horario.toString());
 
             db.collection("Barbearias")
                     .document(horario.getIdBarbearia())

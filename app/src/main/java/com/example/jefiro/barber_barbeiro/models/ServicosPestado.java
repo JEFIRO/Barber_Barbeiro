@@ -129,8 +129,9 @@ public class ServicosPestado extends AppCompatActivity {
                 finish();
                 return;
             }
-
-            Servicos servicos = new Servicos(idBarbearia, nome, duracao, Double.parseDouble(valor));
+            String valorClean = valor.replaceAll("[^\\d,]", "").replace(",", ".");
+            double valorDouble = Double.parseDouble(valorClean);
+            Servicos servicos = new Servicos(idBarbearia, nome, duracao, valorDouble);
 
             salvarServico(servicos);
         }
@@ -142,7 +143,7 @@ public class ServicosPestado extends AppCompatActivity {
 
         db.collection("Barbearias")
                 .document(servicos.getBarbearia_id())
-                .collection("Enderecos")
+                .collection("Servicos")
                 .add(servicos)
                 .addOnSuccessListener(docRef -> {
                     Log.d("Servico", "Servicos salvo: " + docRef.getId());

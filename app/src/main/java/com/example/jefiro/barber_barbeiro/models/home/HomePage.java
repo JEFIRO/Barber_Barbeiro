@@ -19,6 +19,7 @@ public class HomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home_page);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -38,6 +39,16 @@ public class HomePage extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.containerFragment, selectedFragment)
                         .commit();
+            }
+
+            if (selectedFragment != null) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.containerFragment, selectedFragment)
+                        .commit();
+            }
+
+            if (item.getItemId() == R.id.nav_agendamento){
+                selectedFragment = new ConfigurationFragment();
             }
 
             return true;

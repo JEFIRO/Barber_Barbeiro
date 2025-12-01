@@ -20,6 +20,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.jefiro.barber_barbeiro.R;
+import com.example.jefiro.barber_barbeiro.models.auth.Login;
 import com.example.jefiro.barber_barbeiro.service.SupaBase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -114,6 +115,8 @@ public class BarbeiroForm extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Toast.makeText(getApplicationContext(), "Barbairo cadastrado com sucesso", Toast.LENGTH_LONG).show();
                             finish();
+
+                            startActivity(new Intent(getApplicationContext(), Login.class));
                             Log.d("FIRESTORE", "Barbeiro salvo");
                         } else {
                             Log.d("FIRESTORE", "Barbeiro não salvo:");
