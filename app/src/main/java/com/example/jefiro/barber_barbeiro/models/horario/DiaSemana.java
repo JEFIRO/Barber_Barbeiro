@@ -1,4 +1,4 @@
-package com.example.jefiro.barber_barbeiro.models;
+package com.example.jefiro.barber_barbeiro.models.horario;
 
 public enum DiaSemana {
     SEGUNDA,

@@ -1,6 +1,6 @@
 package com.example.jefiro.barber_barbeiro.models.Barbearia;
 
-import com.example.jefiro.barber_barbeiro.models.Horario;
+import com.example.jefiro.barber_barbeiro.models.horario.Horario;
 
 import java.time.LocalDateTime;
 import java.util.List;

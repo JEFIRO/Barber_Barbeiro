@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".models.home.HorarioFuncionamento">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,25 +10,25 @@
         android:padding="24dp">
 
         <TextView
-            android:id="@+id/txtTitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Horário de Funcionamento"
-            android:textColor="#000000"
             android:textSize="22sp"
             android:textStyle="bold" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerHorarios"
+        <LinearLayout
+            android:id="@+id/containerDias"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="24dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSalvarHorarios"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="24dp"
-            android:text="Salvar" />
+            android:layout_marginTop="24dp"
+            android:text="Salvar Alterações" />
+
     </LinearLayout>
 </ScrollView>

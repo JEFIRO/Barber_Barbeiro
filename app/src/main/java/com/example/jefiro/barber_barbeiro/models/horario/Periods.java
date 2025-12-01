@@ -1,4 +1,4 @@
-package com.example.jefiro.barber_barbeiro.models;
+package com.example.jefiro.barber_barbeiro.models.horario;
 
 public class Periods {
     private String open;
