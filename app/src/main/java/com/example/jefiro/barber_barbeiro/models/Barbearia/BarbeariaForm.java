@@ -485,6 +485,7 @@ public class BarbeariaForm extends AppCompatActivity {
         String estado = spinnerEstado.getText().toString().trim();
 
         Endereco endereco = new Endereco(numero, bairro, cidade, estado, selectedLat, selectedLng);
+        endereco.setIdBarbearia(barbeariaId);
 
 
         db.collection("Barbearias")

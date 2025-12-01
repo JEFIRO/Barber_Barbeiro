@@ -1,4 +1,4 @@
-package com.example.jefiro.barber_barbeiro.models.home;
+package com.example.jefiro.barber_barbeiro.models.horario;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -15,9 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
 import com.example.jefiro.barber_barbeiro.R;
-import com.example.jefiro.barber_barbeiro.models.horario.DiaSemana;
-import com.example.jefiro.barber_barbeiro.models.horario.Horario;
-import com.example.jefiro.barber_barbeiro.models.horario.Periods;
 import com.example.jefiro.barber_barbeiro.models.auth.Login;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -190,7 +187,8 @@ public class HorarioFuncionamento extends AppCompatActivity {
             }
 
             Horario horario = new Horario(diaEnum, periodsList, closed);
-            horario.setIdBarbearia(auth.getUid());
+            horario.setIdBarbearia(auth.getCurrentUser().getUid());
+            Log.d("Horario",horario.toString());
 
             db.collection("Barbearias")
                     .document(horario.getIdBarbearia())

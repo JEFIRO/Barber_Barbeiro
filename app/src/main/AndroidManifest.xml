@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Barber_Barbeiro">
         <activity
-            android:name=".models.home.HorarioFuncionamento"
+            android:name=".models.horario.HorarioFuncionamento"
             android:exported="false" />
         <activity
             android:name=".models.Barbeiro.BarbeiroForm"

@@ -14,6 +14,9 @@ public class Horario {
         this.closed = closed;
     }
 
+    public Horario() {
+    }
+
     public DiaSemana getDiaSemana() {
         return diaSemana;
     }
@@ -44,5 +47,15 @@ public class Horario {
 
     public void setClosed(Boolean closed) {
         this.closed = closed;
+    }
+
+    @Override
+    public String toString() {
+        return "Horario{" +
+                "idBarbearia='" + idBarbearia + '\'' +
+                ", diaSemana=" + diaSemana +
+                ", periods=" + periods +
+                ", closed=" + closed +
+                '}';
     }
 }

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.jefiro.barber_barbeiro.R;
 import com.example.jefiro.barber_barbeiro.models.Barbeiro.BarbeiroForm;
+import com.example.jefiro.barber_barbeiro.models.horario.HorarioFuncionamento;
 
 public class ConfigurationFragment extends Fragment {
     @Override

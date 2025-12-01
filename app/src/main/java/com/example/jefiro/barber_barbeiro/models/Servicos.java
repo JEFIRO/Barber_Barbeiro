@@ -3,7 +3,6 @@ package com.example.jefiro.barber_barbeiro.models;
 import java.time.LocalDateTime;
 
 public class Servicos {
-    private String id;
     private String barbearia_id;
     private String nome;
     private int duracao;

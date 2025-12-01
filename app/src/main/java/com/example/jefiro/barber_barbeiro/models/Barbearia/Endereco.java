@@ -1,7 +1,7 @@
 package com.example.jefiro.barber_barbeiro.models.Barbearia;
 
 public class Endereco {
-    private String uuid;
+    private String idBarbearia;
     private String numero;
     private String bairro;
     private String cidade;
@@ -31,6 +31,14 @@ public class Endereco {
 
     public Double getLog() {
         return log;
+    }
+
+    public String getIdBarbearia() {
+        return idBarbearia;
+    }
+
+    public void setIdBarbearia(String idBarbearia) {
+        this.idBarbearia = idBarbearia;
     }
 
     public void setLog(Double log) {

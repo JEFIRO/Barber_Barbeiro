@@ -27,4 +27,12 @@ public class Periods {
     public void setClose(String close) {
         this.close = close;
     }
+
+    @Override
+    public String toString() {
+        return "Periods{" +
+                "open='" + open + '\'' +
+                ", close='" + close + '\'' +
+                '}';
+    }
 }
