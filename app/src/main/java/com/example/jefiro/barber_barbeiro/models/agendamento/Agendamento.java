@@ -2,6 +2,12 @@ package com.example.jefiro.barber_barbeiro.models.agendamento;
 
 import com.google.firebase.Timestamp;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Calendar;
+import java.util.Locale;
+
 public class Agendamento {
     private String idBarbearia;
     private String idBarbeiro;
@@ -35,6 +41,27 @@ public class Agendamento {
         this.confirmado = confirmado;
         this.criadoem = criadoem;
     }
+
+    public String juntarDataHora() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(data.toDate());
+
+        Calendar calHora = Calendar.getInstance();
+        calHora.setTime(hora.toDate());
+
+        cal.set(Calendar.HOUR_OF_DAY, calHora.get(Calendar.HOUR_OF_DAY));
+        cal.set(Calendar.MINUTE, calHora.get(Calendar.MINUTE));
+        cal.set(Calendar.SECOND, calHora.get(Calendar.SECOND));
+        cal.set(Calendar.MILLISECOND, 0);
+
+        return formatarDataHora(new Timestamp(cal.getTime()));
+    }
+
+    private String formatarDataHora(Timestamp timestamp) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy 'às' HH:mm", Locale.getDefault());
+        return sdf.format(timestamp.toDate());
+    }
+
 
     public String getIdBarbearia() {
         return idBarbearia;

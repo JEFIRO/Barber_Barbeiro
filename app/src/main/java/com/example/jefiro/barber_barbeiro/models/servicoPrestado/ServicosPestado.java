@@ -43,7 +43,6 @@ public class ServicosPestado extends AppCompatActivity {
         setContentView(R.layout.activity_servicos_pestado);
 
         mAuth = FirebaseAuth.getInstance();
-
         db = FirebaseFirestore.getInstance();
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -58,7 +57,6 @@ public class ServicosPestado extends AppCompatActivity {
 
         btnAdicionarServico.setOnClickListener(v -> adicionarServicoCard());
         btnSalvar.setOnClickListener(v -> salvarServicos());
-
         getService();
     }
 
