@@ -103,7 +103,6 @@ public class ServicosPestado extends AppCompatActivity {
             EditText edtDuracao = card.findViewById(R.id.txtServicoDuracao);
             EditText edtNome = card.findViewById(R.id.txtServicoNome);
 
-            // Nome
             edtNome.setText(item.getNome());
 
             edtDuracao.setText(item.getDuracao());
@@ -113,15 +112,12 @@ public class ServicosPestado extends AppCompatActivity {
 
             edtValor.addTextChangedListener(new TextWatcher() {
                 private String current = "";
-
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 }
-
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                 }
-
                 @Override
                 public void afterTextChanged(Editable s) {
                     if (!s.toString().equals(current)) {
