@@ -17,4 +17,15 @@ public interface IFirestoreRepository<T> {
     void getById(String collection, String id, OnCompleteListener<DocumentSnapshot> listener);
 
     void getAll(String collection, OnCompleteListener<QuerySnapshot> listener);
+
+    void getSubDocument(String collection, String documentId, String subcollection, OnCompleteListener<QuerySnapshot> listener);
+    void getSubDocument(
+            String collection,
+            String documentId,
+            String subcollection,
+            String subDocumentId,
+            OnCompleteListener<DocumentSnapshot> listener
+    );
+
+
 }

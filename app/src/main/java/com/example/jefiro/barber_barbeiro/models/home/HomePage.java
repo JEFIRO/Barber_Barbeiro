@@ -30,6 +30,14 @@ public class HomePage extends AppCompatActivity {
 
         BottomNavigationView bottomNav = findViewById(R.id.bottomNav);
 
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.containerFragment, new HomeFragment())
+                    .commit();
+
+            bottomNav.setSelectedItemId(R.id.nav_home);
+        }
+
         bottomNav.setOnItemSelectedListener(item -> {
             Fragment selectedFragment = null;
 
@@ -41,6 +49,9 @@ public class HomePage extends AppCompatActivity {
             }
             if (item.getItemId() == R.id.nav_agendamento) {
                 selectedFragment = new AgendamentoFragment();
+            }
+            if (item.getItemId() == R.id.nav_home) {
+                selectedFragment = new HomeFragment();
             }
 
             if (selectedFragment != null) {

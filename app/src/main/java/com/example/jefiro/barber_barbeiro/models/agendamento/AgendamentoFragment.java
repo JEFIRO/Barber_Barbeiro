@@ -81,10 +81,8 @@ public class AgendamentoFragment extends Fragment {
                 tvStatus.setTextColor(getResources().getColor(R.color.black));
             }
 
-            // Data + hora
             tvDataHora.setText(agendamento.juntarDataHora());
 
-            // BUSCA SERVIÇO
             getServico(agendamento.getIdServico(), serv -> {
                 if (serv != null) {
                     tvServico.setText(serv.getNome());

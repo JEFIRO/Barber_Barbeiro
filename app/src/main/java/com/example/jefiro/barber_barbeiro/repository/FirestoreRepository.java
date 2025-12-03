@@ -49,4 +49,23 @@ public class FirestoreRepository<T> implements IFirestoreRepository<T> {
                 .get()
                 .addOnCompleteListener(listener);
     }
+
+    @Override
+    public void getSubDocument(String collection, String documentId, String subcollection, OnCompleteListener<QuerySnapshot> listener) {
+        db.collection(collection)
+                .document(documentId)
+                .collection(subcollection)
+                .get()
+                .addOnCompleteListener(listener);
+    }
+
+    @Override
+    public void getSubDocument(String collection, String documentId, String subcollection, String subDocumentId, OnCompleteListener<DocumentSnapshot> listener) {
+        db.collection(collection)
+                .document(documentId)
+                .collection(subcollection)
+                .document(subDocumentId)
+                .get()
+                .addOnCompleteListener(listener);
+    }
 }
