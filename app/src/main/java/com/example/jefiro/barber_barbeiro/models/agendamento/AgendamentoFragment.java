@@ -26,7 +26,6 @@ public class AgendamentoFragment extends Fragment {
     Servicos servico;
     Barbearia barbearia;
     Barbeiro barbeiro;
-//    Cliente cliente;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -2,7 +2,6 @@ package com.example.jefiro.barber_barbeiro.models.servicoPrestado;
 
 import com.google.firebase.Timestamp;
 
-import java.time.LocalDateTime;
 
 public class Servicos {
     private String barbearia_id;
