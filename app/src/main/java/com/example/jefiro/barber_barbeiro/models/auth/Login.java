@@ -69,7 +69,6 @@ public class Login extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Preencha todos os campos", Toast.LENGTH_LONG).show();
             return;
         }
-
         authUser(email, senha);
     }
 
@@ -83,16 +82,16 @@ public class Login extends AppCompatActivity {
                     finish();
                 } else {
                     try {
-                        task.getException();
+                        throw task.getException();
                     } catch (Exception e) {
-                        Toast.makeText(getApplicationContext(), "Email ou senha invalido", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Email ou senha inválido", Toast.LENGTH_LONG).show();
                     }
                 }
             }
         });
     }
 
-    public void cadastrarUser(View e){
+    public void cadastrarUser(View e) {
         startActivity(new Intent(getApplicationContext(), BarbeariaForm.class));
         finish();
     }

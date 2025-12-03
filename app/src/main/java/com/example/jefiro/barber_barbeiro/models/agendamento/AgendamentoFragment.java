@@ -13,19 +13,19 @@ import com.example.jefiro.barber_barbeiro.R;
 import com.example.jefiro.barber_barbeiro.models.Barbearia.Barbearia;
 import com.example.jefiro.barber_barbeiro.models.Barbeiro.Barbeiro;
 import com.example.jefiro.barber_barbeiro.models.servicoPrestado.Servicos;
+import com.example.jefiro.barber_barbeiro.repository.FirestoreCallback;
 import com.example.jefiro.barber_barbeiro.service.App;
+import com.example.jefiro.barber_barbeiro.service.FirestoreCliente;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class AgendamentoFragment extends Fragment {
     private ViewGroup containerServicos;
 
     String idBarbearia;
-    Servicos servico;
-    Barbearia barbearia;
-    Barbeiro barbeiro;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,7 +74,6 @@ public class AgendamentoFragment extends Fragment {
             TextView tvPreco = card.findViewById(R.id.tvPreco);
             TextView tvEndereco = card.findViewById(R.id.tvEndereco);
 
-            // Status
             if (!agendamento.isConfirmado()) {
                 tvStatus.setText("Pendente");
                 tvStatus.setBackgroundColor(getResources().getColor(R.color.yellow));
@@ -90,31 +89,31 @@ public class AgendamentoFragment extends Fragment {
                 }
             });
 
-            // BUSCA BARBEIRO
             getBarbeiro(agendamento.getIdBarbeiro(), barb -> {
                 if (barb != null) {
                     tvBarbeiro.setText(barb.getNome());
                     tvBarbeiro.setBackgroundColor(Color.parseColor("#0E3A5D"));
                 }
             });
-
-            // BUSCA CLIENTE
-//            getCliente(agendamento.getIdCliente(), cli -> {
-//                if (cli != null) {
-//                    tvCliente.setText(cli.getNome());
-//                }
-//            });
-
-            // BUSCA BARBEARIA
-//            getBarbearia(barb -> {
-//                if (barb != null) {
-//                    tvEndereco.setText(barb.getEndereco());
-//                }
-//            });
-
             containerServicos.addView(card);
+            getServico(agendamento.getIdCliente(), cliente -> {
+                if (cliente != null) {
+                    getCliente(new FirestoreCallback<String>() {
+                        @Override
+                        public void onSuccess(String result) {
+                            tvCliente.setText(result);
+                        }
+
+                        @Override
+                        public void onFailure(Exception e) {
+
+                        }
+                    });
+                }
+            });
         }
     }
+
     private void getServico(String idServicos, OnServicoLoaded callback) {
         App.getDb()
                 .collection("Barbearias")
@@ -139,18 +138,6 @@ public class AgendamentoFragment extends Fragment {
                 );
     }
 
-//    private void getCliente(String idCliente, OnClienteLoaded callback) {
-//        App.getDb()
-//                .collection("Barbearias")
-//                .document(idBarbearia)
-//                .collection("Clientes")
-//                .document(idCliente)
-//                .get()
-//                .addOnSuccessListener(doc ->
-//                        callback.onLoaded(doc.toObject(Cliente.class))
-//                );
-//    }
-
     private void getBarbearia(OnBarbeariaLoaded callback) {
         App.getDb()
                 .collection("Barbearias")
@@ -159,6 +146,21 @@ public class AgendamentoFragment extends Fragment {
                 .addOnSuccessListener(doc ->
                         callback.onLoaded(doc.toObject(Barbearia.class))
                 );
+    }
+
+    public void getCliente(FirestoreCallback<String> callback) {
+
+        new FirestoreCliente(getContext()).getClienteID("", new FirestoreCallback<Map<String, Object>>() {
+            @Override
+            public void onSuccess(Map<String, Object> result) {
+                callback.onSuccess(String.valueOf(result.get("nome")));
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+
+            }
+        });
     }
 
 
@@ -170,9 +172,9 @@ public class AgendamentoFragment extends Fragment {
         void onLoaded(Barbeiro barbeiro);
     }
 
-    //    interface OnClienteLoaded { void onLoaded(Cliente cliente); }
     interface OnBarbeariaLoaded {
         void onLoaded(Barbearia barbearia);
     }
+
 
 }
