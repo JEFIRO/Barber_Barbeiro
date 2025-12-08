@@ -1,26 +1,81 @@
 {
   "project_info": {
-    "project_number": "453030137678",
-    "project_id": "barber-barbeiros",
-    "storage_bucket": "barber-barbeiros.firebasestorage.app"
+    "project_number": "738440643488",
+    "project_id": "barber-40482",
+    "storage_bucket": "barber-40482.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:453030137678:android:506015729d03819fd0981f",
+        "mobilesdk_app_id": "1:738440643488:android:59b64bcd9d640188cb1ac5",
         "android_client_info": {
-          "package_name": "com.example.jefiro.barber_barbeiro"
+          "package_name": "com.example.jefiro.barber"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "738440643488-eua04eomjrhf1th7u5r7sa71famjnad4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jefiro.barber",
+            "certificate_hash": "aaad9819e2d5eea381fe3f13f6faa67253cc40eb"
+          }
+        },
+        {
+          "client_id": "738440643488-vbfcjddqchjuphhv03il7ctcl77m5epa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jefiro.barber",
+            "certificate_hash": "c775855770714ca91bbe8db2e0673770fe23dbda"
+          }
+        },
+        {
+          "client_id": "738440643488-4ntblvtk0eevfihkq6onsi90v96mmhq7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyCE6qrZFJZUAnDZLriiKeyeNEdZyNhRXVI"
+          "current_key": "AIzaSyCOMkIUkssCqSB-_N1KEyv0uEzCrCF_Af8"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "738440643488-4ntblvtk0eevfihkq6onsi90v96mmhq7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:738440643488:android:bd1fb4a4265ab97ccb1ac5",
+        "android_client_info": {
+          "package_name": "com.example.jefiro.barber_barbeiro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "738440643488-4ntblvtk0eevfihkq6onsi90v96mmhq7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOMkIUkssCqSB-_N1KEyv0uEzCrCF_Af8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "738440643488-4ntblvtk0eevfihkq6onsi90v96mmhq7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

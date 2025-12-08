@@ -1,6 +1,6 @@
 package com.example.jefiro.barber_barbeiro.models.Barbeiro;
 
-import java.time.LocalDateTime;
+import com.google.firebase.Timestamp;
 
 public class Barbeiro {
     private String id;
@@ -8,9 +8,10 @@ public class Barbeiro {
     private String nome;
     private String email;
     private String fotoBarbeiro;
+    private String calendario_id;
     private boolean ativo;
-    private LocalDateTime criadoEm;
-    private LocalDateTime atualizadoEm;
+    private Timestamp criadoEm;
+    private Timestamp atualizadoEm;
 
     public Barbeiro() {
     }
@@ -22,8 +23,8 @@ public class Barbeiro {
         this.nome = nome;
         this.fotoBarbeiro = fotoBarbeiro;
         this.ativo = true;
-        this.criadoEm = LocalDateTime.now();
-        this.atualizadoEm = LocalDateTime.now();
+        this.criadoEm = Timestamp.now();
+        this.atualizadoEm = Timestamp.now();
     }
 
     public String getId() {
@@ -32,6 +33,14 @@ public class Barbeiro {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getCalendario_id() {
+        return calendario_id;
+    }
+
+    public void setCalendario_id(String calendario_id) {
+        this.calendario_id = calendario_id;
     }
 
     public String getBarbearia_id() {
@@ -74,19 +83,19 @@ public class Barbeiro {
         this.ativo = ativo;
     }
 
-    public LocalDateTime getCriadoEm() {
+    public Timestamp getCriadoEm() {
         return criadoEm;
     }
 
-    public void setCriadoEm(LocalDateTime criadoEm) {
+    public void setCriadoEm(Timestamp criadoEm) {
         this.criadoEm = criadoEm;
     }
 
-    public LocalDateTime getAtualizadoEm() {
+    public Timestamp getAtualizadoEm() {
         return atualizadoEm;
     }
 
-    public void setAtualizadoEm(LocalDateTime atualizadoEm) {
+    public void setAtualizadoEm(Timestamp atualizadoEm) {
         this.atualizadoEm = atualizadoEm;
     }
 }

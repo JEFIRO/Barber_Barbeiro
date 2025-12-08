@@ -3,8 +3,6 @@ package com.example.jefiro.barber_barbeiro.models.agendamento;
 import com.google.firebase.Timestamp;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Locale;
 

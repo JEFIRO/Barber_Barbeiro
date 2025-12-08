@@ -6,14 +6,16 @@ public class Endereco {
     private String bairro;
     private String cidade;
     private String estado;
+    private String rua;
     private Double lat;
     private Double log;
 
     public Endereco() {
     }
 
-    public Endereco(String numero, String bairro, String cidade, String estado, Double lat, Double log) {
+    public Endereco(String numero, String bairro, String cidade, String estado, String rua, Double lat, Double log) {
         this.numero = numero;
+        this.rua = rua;
         this.bairro = bairro;
         this.cidade = cidade;
         this.estado = estado;
@@ -43,6 +45,14 @@ public class Endereco {
 
     public void setLog(Double log) {
         this.log = log;
+    }
+
+    public String getRua() {
+        return rua;
+    }
+
+    public void setRua(String rua) {
+        this.rua = rua;
     }
 
     public String getNumero() {

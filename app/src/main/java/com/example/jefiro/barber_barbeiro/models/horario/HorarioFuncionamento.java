@@ -151,6 +151,7 @@ public class HorarioFuncionamento extends AppCompatActivity {
             txtDia.setText(formatarNomeDia(diaEnum));
 
             Horario h = dadosExistentes.get(diaEnum.name());
+
             boolean isClosed = true;
 
             if (h != null) {

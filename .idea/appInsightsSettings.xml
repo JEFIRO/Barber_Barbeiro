@@ -9,9 +9,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="com.example.jefiro.barber_barbeiro" />
-                  <option name="mobileSdkAppId" value="1:453030137678:android:506015729d03819fd0981f" />
-                  <option name="projectId" value="barber-barbeiros" />
-                  <option name="projectNumber" value="453030137678" />
+                  <option name="mobileSdkAppId" value="1:738440643488:android:bd1fb4a4265ab97ccb1ac5" />
+                  <option name="projectId" value="barber-40482" />
+                  <option name="projectNumber" value="738440643488" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

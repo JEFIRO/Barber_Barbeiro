@@ -44,7 +44,7 @@ import java.util.List;
 public class BarbeariaForm extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_CODE = 100;
     private TextInputEditText editNome, editTelefone, editSenha, editConfirmarSenha, editEmail;
-    private TextInputEditText editEndereco, editNumero, editBairro, editCidade;
+    private TextInputEditText editEndereco, editNumero, editBairro, editCidade,editRua;
     private AutoCompleteTextView spinnerEstado;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -484,12 +484,14 @@ public class BarbeariaForm extends AppCompatActivity {
     }
 
     private void salvarEnderecosSubcolecao(String barbeariaId) {
+        String enderecoEdt = editEndereco.getText().toString().trim();
         String numero = editNumero.getText().toString().trim();
         String bairro = editBairro.getText().toString().trim();
         String cidade = editCidade.getText().toString().trim();
         String estado = spinnerEstado.getText().toString().trim();
 
-        Endereco endereco = new Endereco(numero, bairro, cidade, estado, selectedLat, selectedLng);
+
+        Endereco endereco = new Endereco(numero, bairro, cidade, estado,enderecoEdt, selectedLat, selectedLng);
         endereco.setIdBarbearia(barbeariaId);
 
 
