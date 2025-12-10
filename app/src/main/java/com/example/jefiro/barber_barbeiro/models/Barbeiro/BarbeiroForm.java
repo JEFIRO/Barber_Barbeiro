@@ -111,12 +111,13 @@ public class BarbeiroForm extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(String calendarId) {
                                     barbeiro.setCalendario_id(calendarId);
-
                                     salvarNoBanco(barbeiro);
                                 }
 
                                 @Override
                                 public void onError(Exception e) {
+                                    Log.d("DENUG", e.getMessage());
+                                    Toast.makeText(getApplicationContext(), "Barbeiro não cadastrado" + e.getMessage(), Toast.LENGTH_LONG).show();
 
                                 }
                             });
@@ -161,11 +162,12 @@ public class BarbeiroForm extends AppCompatActivity {
         );
     }
 
-    private void correcaoTemporaria(){
+    private void correcaoTemporaria() {
         mAuth.signOut();
         startActivity(new Intent(getApplicationContext(), Login.class));
         finish();
     }
+
     private void criarCalendarioAsync(String barbeiro, OnCallBack callback) {
         Executor executor = Executors.newSingleThreadExecutor();
         Handler handler = new Handler(Looper.getMainLooper());

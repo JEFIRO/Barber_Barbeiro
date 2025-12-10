@@ -44,7 +44,7 @@ import java.util.List;
 public class BarbeariaForm extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_CODE = 100;
     private TextInputEditText editNome, editTelefone, editSenha, editConfirmarSenha, editEmail;
-    private TextInputEditText editEndereco, editNumero, editBairro, editCidade,editRua;
+    private TextInputEditText editEndereco, editNumero, editBairro, editCidade, editRua;
     private AutoCompleteTextView spinnerEstado;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -78,6 +78,35 @@ public class BarbeariaForm extends AppCompatActivity {
         atualizarUI();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Log.d("DEBUG_MAPS", "requestCode=" + requestCode + " resultCode=" + resultCode);
+
+        if (requestCode == 1001 && resultCode == RESULT_OK) {
+
+            double lat = data.getDoubleExtra("lat", 0);
+            double lon = data.getDoubleExtra("lon", 0);
+
+            Log.d("DEBUG_MAPS", "LAT RECEBIDA = " + lat);
+            Log.d("DEBUG_MAPS", "LON RECEBIDA = " + lon);
+
+            selectedLat = lat;
+            selectedLng = lon;
+
+            ArrayList<String> endereco = data.getStringArrayListExtra("endereco");
+
+            Log.d("DEBUG_MAPS", "ENDEREÇO LIST -> " + endereco);
+
+            if (endereco != null && !endereco.isEmpty()) {
+                setEndereco(endereco);
+            } else {
+                Log.e("DEBUG_MAPS", "ERRO: Retornou do MAPS mas o endereço veio vazio!");
+            }
+        }
+    }
+
     private void inicializarViews() {
 
         editEmail = findViewById(R.id.editEmail);
@@ -97,7 +126,6 @@ public class BarbeariaForm extends AppCompatActivity {
         btnRemoverFoto = findViewById(R.id.btnRemoverFoto);
         btnSelecionarFoto = findViewById(R.id.btnSelecionarFoto);
 
-        // Layouts
         layoutStep1 = findViewById(R.id.layoutStep1);
         layoutStep2 = findViewById(R.id.layoutStep2);
         layoutStep3 = findViewById(R.id.layoutStep3);
@@ -271,7 +299,6 @@ public class BarbeariaForm extends AppCompatActivity {
             step1.setTextColor(getResources().getColor(R.color.blue));
         }
 
-        // Step 2
         if (currentStep >= 2) {
             step2.setBackgroundResource(R.drawable.circle_step_active);
             step2.setTextColor(getResources().getColor(R.color.blue));
@@ -332,9 +359,7 @@ public class BarbeariaForm extends AppCompatActivity {
     private void enderecoViaPlace() {
         Intent i = new Intent(getApplicationContext(), Maps.class);
         startActivityForResult(i, 1001);
-
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
@@ -356,40 +381,23 @@ public class BarbeariaForm extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 1001 && resultCode == RESULT_OK) {
-
-            double lat = data.getDoubleExtra("lat", 0);
-            double lon = data.getDoubleExtra("lon", 0);
-
-            selectedLat = lat;
-            selectedLng = lon;
-
-            ArrayList<String> endereco = data.getStringArrayListExtra("endereco");
-
-            if (!endereco.isEmpty()) {
-                setEndereco(endereco);
-                return;
-            }
-
-        }
-    }
-
     private void setEndereco(List<String> endereco) {
-        if (endereco.size() >= 6) {
-            Log.d("MAPS", "Endereço selecionado: " + endereco);
+        Log.d("DEBUG_MAPS", "setEndereco() CHAMADO");
+        Log.d("DEBUG_MAPS", "Dados recebidos: " + endereco);
 
+        if (endereco.size() >= 5) {
             editEndereco.setText(endereco.get(0));
             editNumero.setText(endereco.get(1));
             editBairro.setText(endereco.get(2));
             editCidade.setText(endereco.get(3));
             spinnerEstado.setText(endereco.get(4));
-        }
 
+            Log.d("DEBUG_MAPS", " Endereço aplicado no formulário com sucesso");
+        } else {
+            Log.e("DEBUG_MAPS", " Endereço com campos incompletos -> size=" + endereco.size());
+        }
     }
+
 
     private void abrirGaleria() {
         Intent intent = new Intent(Intent.ACTION_PICK);
@@ -484,29 +492,27 @@ public class BarbeariaForm extends AppCompatActivity {
     }
 
     private void salvarEnderecosSubcolecao(String barbeariaId) {
-        String enderecoEdt = editEndereco.getText().toString().trim();
-        String numero = editNumero.getText().toString().trim();
-        String bairro = editBairro.getText().toString().trim();
-        String cidade = editCidade.getText().toString().trim();
-        String estado = spinnerEstado.getText().toString().trim();
 
+        Log.d("DEBUG_FIRESTORE", "Salvando endereço para barbearia: " + barbeariaId);
+        Log.d("DEBUG_FIRESTORE", "LAT=" + selectedLat + " | LNG=" + selectedLng);
 
-        Endereco endereco = new Endereco(numero, bairro, cidade, estado,enderecoEdt, selectedLat, selectedLng);
+        Endereco endereco = new Endereco(
+                editNumero.getText().toString().trim(),
+                editBairro.getText().toString().trim(),
+                editCidade.getText().toString().trim(),
+                spinnerEstado.getText().toString().trim(),
+                editEndereco.getText().toString().trim(),
+                selectedLat,
+                selectedLng
+        );
         endereco.setIdBarbearia(barbeariaId);
-
 
         db.collection("Barbearias")
                 .document(barbeariaId)
                 .collection("Enderecos")
                 .add(endereco)
-                .addOnSuccessListener(docRef -> {
-                    Log.d("FIRESTORE", "Endereço salvo: " + docRef.getId());
-                })
-                .addOnFailureListener(e -> {
-                    Log.e("FIRESTORE", "Erro ao salvar endereço", e);
-                });
-
-        Toast.makeText(getApplicationContext(), "Tudo certo!", Toast.LENGTH_LONG).show();
+                .addOnSuccessListener(docRef -> Log.d("DEBUG_FIRESTORE", "Endereço salvo id=" + docRef.getId()))
+                .addOnFailureListener(e -> Log.e("DEBUG_FIRESTORE", "Erro ao salvar endereço", e));
     }
 
     private void puxarHome() {

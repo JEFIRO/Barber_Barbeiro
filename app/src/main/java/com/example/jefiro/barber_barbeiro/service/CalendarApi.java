@@ -1,7 +1,6 @@
 package com.example.jefiro.barber_barbeiro.service;
 
 import android.content.Context;
-import android.os.Looper;
 
 import com.example.jefiro.barber_barbeiro.R;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
@@ -14,14 +13,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-import java.util.logging.Handler;
 
 public class CalendarApi {
 
     public Calendar getService(Context context) throws IOException, GeneralSecurityException {
-        InputStream in = context.getResources().openRawResource(R.raw.credentials);
+        InputStream in = context.getResources().openRawResource(R.raw.credentias);
 
         GoogleCredential credential = GoogleCredential.fromStream(in)
                 .createScoped(Collections.singleton(CalendarScopes.CALENDAR));
@@ -42,7 +38,6 @@ public class CalendarApi {
         com.google.api.services.calendar.model.Calendar createdCalendar = service.calendars().insert(calendar).execute();
         return createdCalendar.getId();
     }
-
 
 
 }

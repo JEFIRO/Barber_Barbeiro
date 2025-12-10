@@ -112,6 +112,8 @@ public class HomeFragment extends Fragment {
     private void carregaImg(String url) {
         Glide.with(requireContext())
                 .load(url)
+                .circleCrop()
+                .centerCrop()
                 .into(imgProfile);
     }
 

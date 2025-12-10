@@ -3,63 +3,51 @@ package com.example.jefiro.barber_barbeiro.models.agendamento;
 import com.google.firebase.Timestamp;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Locale;
 
 public class Agendamento {
+    private String id;
     private String idBarbearia;
     private String idBarbeiro;
     private String idServico;
     private String idCliente;
-    private Timestamp data;
-    private Timestamp hora;
+    private Timestamp data_agendada;
     private boolean confirmado;
     private Timestamp criadoem;
+    private Boolean status;
 
     public Agendamento() {
     }
 
-    public Agendamento(String idBarbearia, String idBarbeiro, String idServico, String idCliente, Timestamp data, Timestamp hora) {
+    public Agendamento(String idBarbearia, String idBarbeiro, String idServico, String idCliente) {
         this.idBarbearia = idBarbearia;
         this.idBarbeiro = idBarbeiro;
         this.idServico = idServico;
         this.idCliente = idCliente;
-        this.data = data;
-        this.hora = hora;
         this.criadoem = Timestamp.now();
     }
 
-    public Agendamento(String idBarbearia, String idBarbeiro, String idServico, String idCliente, Timestamp data, Timestamp hora, boolean confirmado, Timestamp criadoem) {
+    public Agendamento(String idBarbearia, String idBarbeiro, String idServico, String idCliente,  boolean confirmado, Timestamp criadoem) {
         this.idBarbearia = idBarbearia;
         this.idBarbeiro = idBarbeiro;
         this.idServico = idServico;
         this.idCliente = idCliente;
-        this.data = data;
-        this.hora = hora;
         this.confirmado = confirmado;
         this.criadoem = criadoem;
     }
 
     public String juntarDataHora() {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(data.toDate());
+        LocalDateTime data = LocalDateTime.ofInstant(data_agendada.toDate().toInstant(), ZoneId.systemDefault());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, dd 'de' MMMM 'de' yyyy 'às' HH:mm", new Locale("pt", "BR"));
+        String dataFormatada = data.format(formatter);
 
-        Calendar calHora = Calendar.getInstance();
-        calHora.setTime(hora.toDate());
 
-        cal.set(Calendar.HOUR_OF_DAY, calHora.get(Calendar.HOUR_OF_DAY));
-        cal.set(Calendar.MINUTE, calHora.get(Calendar.MINUTE));
-        cal.set(Calendar.SECOND, calHora.get(Calendar.SECOND));
-        cal.set(Calendar.MILLISECOND, 0);
-
-        return formatarDataHora(new Timestamp(cal.getTime()));
+        return dataFormatada;
     }
-
-    private String formatarDataHora(Timestamp timestamp) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy 'às' HH:mm", Locale.getDefault());
-        return sdf.format(timestamp.toDate());
-    }
-
 
     public String getIdBarbearia() {
         return idBarbearia;
@@ -93,20 +81,28 @@ public class Agendamento {
         this.idCliente = idCliente;
     }
 
-    public Timestamp getData() {
-        return data;
+    public String getId() {
+        return id;
     }
 
-    public void setData(Timestamp data) {
-        this.data = data;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public Timestamp getHora() {
-        return hora;
+    public Timestamp getData_agendada() {
+        return data_agendada;
     }
 
-    public void setHora(Timestamp hora) {
-        this.hora = hora;
+    public void setData_agendada(Timestamp data_agendada) {
+        this.data_agendada = data_agendada;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     public boolean isConfirmado() {

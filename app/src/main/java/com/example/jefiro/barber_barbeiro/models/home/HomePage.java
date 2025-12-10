@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.jefiro.barber_barbeiro.R;
 import com.example.jefiro.barber_barbeiro.models.ProfileFragment;
-import com.example.jefiro.barber_barbeiro.models.agendamento.AgendamentoFragment;
+import com.example.jefiro.barber_barbeiro.models.agendamento.AgendamentoViewFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomePage extends AppCompatActivity {
@@ -48,7 +48,7 @@ public class HomePage extends AppCompatActivity {
                 selectedFragment = new ProfileFragment();
             }
             if (item.getItemId() == R.id.nav_agendamento) {
-                selectedFragment = new AgendamentoFragment();
+                selectedFragment = new AgendamentoViewFragment();
             }
             if (item.getItemId() == R.id.nav_home) {
                 selectedFragment = new HomeFragment();
