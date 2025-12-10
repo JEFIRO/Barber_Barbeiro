@@ -59,6 +59,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "738440643488-659kpil0nuqmqkfh9idn3u21i8k1bkfk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jefiro.barber_barbeiro",
+            "certificate_hash": "aaad9819e2d5eea381fe3f13f6faa67253cc40eb"
+          }
+        },
+        {
           "client_id": "738440643488-4ntblvtk0eevfihkq6onsi90v96mmhq7.apps.googleusercontent.com",
           "client_type": 3
         }

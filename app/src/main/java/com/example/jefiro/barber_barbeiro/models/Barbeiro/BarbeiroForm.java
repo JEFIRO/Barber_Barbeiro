@@ -22,7 +22,6 @@ import androidx.core.view.WindowInsetsCompat;
 import com.bumptech.glide.Glide;
 import com.example.jefiro.barber_barbeiro.R;
 import com.example.jefiro.barber_barbeiro.models.auth.Login;
-import com.example.jefiro.barber_barbeiro.service.CalendarApi;
 import com.example.jefiro.barber_barbeiro.service.OnCallBack;
 import com.example.jefiro.barber_barbeiro.service.SupaBase;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,7 +38,6 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import android.os.Handler;
-import android.os.Looper;
 
 
 public class BarbeiroForm extends AppCompatActivity {
@@ -107,20 +105,7 @@ public class BarbeiroForm extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             barbeiro.setId(task.getResult().getUser().getUid());
-                            criarCalendarioAsync(barbeiro.getNome(), new OnCallBack() {
-                                @Override
-                                public void onSuccess(String calendarId) {
-                                    barbeiro.setCalendario_id(calendarId);
-                                    salvarNoBanco(barbeiro);
-                                }
-
-                                @Override
-                                public void onError(Exception e) {
-                                    Log.d("DENUG", e.getMessage());
-                                    Toast.makeText(getApplicationContext(), "Barbeiro não cadastrado" + e.getMessage(), Toast.LENGTH_LONG).show();
-
-                                }
-                            });
+                            salvarNoBanco(barbeiro);
 
                             Toast.makeText(getApplicationContext(), "Barbeiro cadastrado com sucesso", Toast.LENGTH_LONG).show();
 
@@ -167,38 +152,7 @@ public class BarbeiroForm extends AppCompatActivity {
         startActivity(new Intent(getApplicationContext(), Login.class));
         finish();
     }
-
-    private void criarCalendarioAsync(String barbeiro, OnCallBack callback) {
-        Executor executor = Executors.newSingleThreadExecutor();
-        Handler handler = new Handler(Looper.getMainLooper());
-
-        executor.execute(() -> {
-            String calendarId = null;
-            Exception exception = null;
-
-            try {
-                CalendarApi calendarApi = new CalendarApi();
-                Calendar service = calendarApi.getService(getApplicationContext());
-                calendarId = calendarApi.criarCalendarioBarbeiro(service, barbeiro);
-            } catch (GeneralSecurityException | IOException e) {
-                exception = e;
-            }
-
-            String finalCalendarId = calendarId;
-            Exception finalException = exception;
-
-            handler.post(() -> {
-                if (finalException != null) {
-                    callback.onError(finalException);
-                } else {
-                    callback.onSuccess(finalCalendarId);
-                }
-            });
-        });
-    }
-
-
-    private void carregarFoto() {
+        private void carregarFoto() {
         if (fotoUri != null) {
             Glide.with(this)
                     .load(fotoUri)
